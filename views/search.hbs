@@ -1,0 +1,19 @@
+<form action="/search/findByName" method="POST">
+    <b>Nome do personagem:</b> <input type="text" name="name" />
+    <button type="submit">Pesquisar</button>
+</form>
+
+{{#each this.data.results}}
+    <dl style="background-color :lightgray">
+        <dt><b>Nome</b></dt>
+        <dd>{{this.name}}</dd>
+        <br>
+        <dt><b>Descrição</b></dt>
+        <dd>{{this.description}}</dd>
+        <br>
+        <dt><b>Imagem</b></dt>
+        <dd>
+            <img src="{{this.thumbnail.path}}.{{this.thumbnail.extension}}" alt="thumbnail" height="150" width="150" >
+        </dd>
+    </dl>
+{{/each}}
