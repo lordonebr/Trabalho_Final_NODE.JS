@@ -3,7 +3,9 @@ var router = express.Router();
 const fetch = require('node-fetch');
 var md5 = require('md5');
 
-function ServiceBase(serviceName, paramTag, paramValue){
+var limitPage = 10;
+
+function ServiceBase(serviceName, offset, paramTag, paramValue){
 
   var publicKey = 'badb7eca459bfa1204d894bfed07aa99';
   var privateKey = '768abe4345a26a3214483fca33bd5c9bdb5db7dd';
@@ -23,6 +25,12 @@ function ServiceBase(serviceName, paramTag, paramValue){
     urlParams += '&' + param1;
   }
 
+  var limitPageParam = 'limit=' + limitPage.toString();
+  urlParams += '&' + limitPageParam;
+
+  var offsetParam = 'offset=' + offset;
+  urlParams += '&' + offsetParam;
+
   var url = 'https://gateway.marvel.com:443/v1/public/' + serviceName + '?' + urlParams;
   console.log('Url = ' + url);
 
@@ -41,11 +49,11 @@ function ServiceBase(serviceName, paramTag, paramValue){
 
 module.exports = {
 
-  CharactersByStartName : function(nameStart){
+  CharactersByStartName : function(nameStart, offset){
     
     return new Promise(function(resolve, reject) {
 
-      ServiceBase('characters', 'nameStartsWith', nameStart)
+      ServiceBase('characters', offset, 'nameStartsWith', nameStart)
       .then(json => {
         resolve(json);
       })
@@ -59,7 +67,7 @@ module.exports = {
 
     return new Promise(function(resolve, reject) {
 
-      ServiceBase('characters/'+idChatacter.toString())
+      ServiceBase('characters/'+idChatacter.toString(), 0)
       .then(json => {
         resolve(json);
       })
@@ -68,6 +76,10 @@ module.exports = {
       });
     });
 
+  },
+  GetLimitPage : function(){
+    return limitPage;
   }
+
 
 }
