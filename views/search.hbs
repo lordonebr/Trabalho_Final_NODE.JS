@@ -1,19 +1,47 @@
-<form action="/search/findByName" method="POST">
-    <b>Nome do personagem:</b> <input type="text" name="name" />
-    <button type="submit">Pesquisar</button>
-</form>
+<!doctype html>
+<html lang="en-us">
+    <head>
 
-{{#each this.data.results}}
-    <dl style="background-color :lightgray">
-        <dt><b>Nome</b></dt>
-        <dd><a href="/character/{{this.id}}">{{this.name}}</a></dd>
-        <br>
-        <dt><b>Descrição</b></dt>
-        <dd>{{this.description}}</dd>
-        <br>
-        <dt><b>Imagem</b></dt>
-        <dd>
-            <img src="{{this.thumbnail.path}}.{{this.thumbnail.extension}}" alt="thumbnail" height="150" width="150" >
-        </dd>
-    </dl>
-{{/each}}
+        <meta charset="utf-8">
+        <title>Search Characters</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://code.iconify.design/1/1.0.2/iconify.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+			<div class="row">
+                <form action="/search/findByName" method="POST" class="bg-light w-100 border border-primary rounded-pill text-center" style="padding:15px;">
+                    
+                    <label for="idName" style="padding-right:15px;"><h5><b>Name of Marvel character: </b></h5></label>
+                    <input type="text" id="idName" name="name" placeholder="" class="w-50" style="margin-right:15px;">
+                    <button type="submit" class="btn btn-primary" style="margin-bottom:5px;">Search
+                        <span class="iconify" data-icon="fe:search" data-inline="false"></span>
+                    </button>
+                </form>
+            </div>
+            <br>
+            {{#if search}}
+                <div class="row">
+                    <p><b>Showing result of: </b> {{search}}</p>
+                </div>
+            {{/if}}         
+            <div class="row">
+                {{#each this.data.results}}
+                <button class="border border-primary btn-light btn-outline-info" onclick="window.location.href='../character/{{this.id}}'" style="width:20%;">
+                    <div class="row" style="padding-left:20px; padding-right:20px;">
+                         <span><b>{{this.name}}</b></span>
+                     </div>
+                    <div class="row" style="padding:20px;">
+                        <img src="{{this.thumbnail.path}}.{{this.thumbnail.extension}}" alt="thumbnail" style="width:100%; height:20%;"> 
+                    </div>
+                </button>
+                {{/each}}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,13 +1,60 @@
-<dl>
-    <dt><b>Nome</b></dt>
-    <dd>{{name}}</dd>
-    <br>
-    <dt><b>Descrição</b></dt>
-    <dd>{{description}}</dd>
-    <br>
-    <dt><b>Imagem</b></dt>
-    <dd>
-        <img src="{{thumbnail.path}}.{{thumbnail.extension}}" alt="thumbnail" height="300" width="300" >
-    </dd>
-</dl>    
-    
+<!doctype html>
+<html lang="en-us">
+    <head>
+
+        <meta charset="utf-8">
+        <title>{{name}}</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+			<div class="row">
+				<div class="col-8">
+					<div class="row">
+						<h1><b>Name:</b> {{name}}</h1>
+					</div>
+					<div class="row">
+						<p><b>Description:</b> {{description}}</p>
+					</div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="span2">
+                                <div class="row-sm border-right border-primary" style="padding-right:30px;"">
+                                    <button type="button" class="btn btn-primary btn-block">
+                                        Comics Available <span class="badge badge-light">{{comics.available}}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-block">
+                                        Series Available <span class="badge badge-light">{{series.available}}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-block">
+                                        Stories Available <span class="badge badge-light">{{stories.available}}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-block">
+                                        Events Available <span class="badge badge-light">{{events.available}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8" style="padding-left:20px;">
+                            <div class="row">
+                                <p><b>URLs:</b></p>
+                            </div>
+                            {{#each urls}}
+                                <div class="row" style="padding-left:50px;">
+                                    <a href="{{this.url}}" target="_blank"><p class="text-uppercase">{{this.type}}</p></a>
+                                </div>
+                            {{/each}}
+                        </div>
+					</div>
+				</div>
+				<div class="col-4">
+					<img src="{{thumbnail.path}}.{{thumbnail.extension}}" alt="thumbnail" height="400" width="400" >
+				</div>
+			</div>
+        </div>
+    </body>
+</html>

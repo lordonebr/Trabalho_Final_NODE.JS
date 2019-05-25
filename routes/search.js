@@ -10,6 +10,7 @@ const Service = require('../services/api');
     
     Service.CharactersByStartName(req.body.name)
     .then(json => {
+        json.search = req.body.name;
         res.render('search', json);
       })
       .catch(error => {
