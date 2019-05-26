@@ -3,7 +3,6 @@ var router = express.Router();
 const Service = require('../services/api');
 
   router.get('/:id', function(req, res, next) {
-
     Service.ChatacterById(req.params.id)
     .then(json => {
         if(json.data.results.length == 1)
