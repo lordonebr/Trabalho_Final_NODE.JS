@@ -62,15 +62,57 @@
                 <input type="button" id="btnFavoritos" data-id="{{this.id}}" class="btn btn-info hide" value="" />
             </div>
         </div>
-        <div class="row">
-            <form action="/search" method="GET">
-                <button type="submit" class="btn btn-primary">
-                    <span class="iconify" style="padding-bottom:2px; width:25px; height:25px;"
-                        data-icon="ion:md-arrow-round-back" data-inline="false"></span>
-                    Back
-                </button>
-            </form>
-        </div>
+
+    </div>
+    <br>
+    {{#if pagesComics}}
+    <div class="row">
+        <h4><b>Comics Available</b></h4>
+    </div>
+    <div class="row">
+        <p style="padding-right:15px;"><b>Pages: </b></p>
+        <nav>
+            <ul class="pagination">
+                {{#each this.pagesComics}}
+                <li class="page-item">
+                    <form action="/character/{{this.idCharacter}}/{{this.numPage}}" method="GET">
+                        {{#if this.active}}
+                        <button type="submit" class="btn btn-danger">{{this.labelButton}}</button>
+                        {{else}}
+                        <button type="submit" class="btn btn-ligth">{{this.labelButton}}</button>
+                        {{/if}}
+                    </form>
+                </li>
+                {{/each}}
+            </ul>
+        </nav>
+    </div>
+    {{/if}}
+    <div class="row">
+        {{#each lstComics}}
+        <button class="border border-danger btn-light btn-outline-danger"
+            onclick="window.location.href='{{this.thumbnail.path}}.{{this.thumbnail.extension}}'" style="width:20%;">
+            <div class="row" style="padding-left:20px; padding-right:20px;">
+                <span><b>{{this.title}}</b></span>
+            </div>
+            <div class="row" style="padding:20px;">
+                <img src="{{this.thumbnail.path}}.{{this.thumbnail.extension}}" alt="thumbnail"
+                    style="width:100%; height:20%;">
+            </div>
+        </button>
+        {{/each}}
+    </div>
+    <br>
+    <div class="row">
+        <form action="/search" method="GET">
+            <button type="submit" class="btn btn-danger">
+                <span class="iconify" style="padding-bottom:2px; width:25px; height:25px;"
+                    data-icon="ion:md-arrow-round-back" data-inline="false"></span>
+                Back
+            </button>
+        </form>
+    </div>
+    </div>
     </div>
 </body>
 
@@ -79,8 +121,9 @@
     .hide {
         display: none;
     }
+
     input#btnFavoritos {
-    margin-top: 8px;
+        margin-top: 8px;
     }
 </style>
 <script>
@@ -92,14 +135,22 @@
 
     function validarFavoritos() {
         var id = $("#idHero").val();
-        var url = `../favoritos/isFavorito/${id}`;
+        var url = `/favoritos/isFavorito/${id}`;
         $.get(url, function (data, status) {
             if (status === "success") {
                 //Se ja esta adicionado aos favoritos
                 if (data) {
-                    $("#btnFavoritos").val("Remove to Favorites").addClass("remove-favoritos").removeClass("hide").removeClass("add-favoritos");
+                    $("#btnFavoritos").val("Remove to Favorites")
+                    .addClass("remove-favoritos")
+                    .removeClass("hide")
+                    .removeClass("add-favoritos")
+                    .attr("data-acao","remover");
                 } else {//Se não é favorito 
-                    $("#btnFavoritos").val("Add to Favorites").addClass("add-favoritos").removeClass("hide").removeClass("remove-favoritos");
+                    $("#btnFavoritos").val("Add to Favorites")
+                    .addClass("add-favoritos")
+                    .removeClass("hide")
+                    .removeClass("remove-favoritos")
+                    .attr("data-acao","adicionar");;
                 }
                 registrarEventos();
             }
@@ -108,22 +159,24 @@
 
     function registrarEventos() {
         var id = $("#idHero").val();
-
         //Adiciona Favoritos 
-        $(".add-favoritos").on("click", function () {
-            var url = `../favoritos/adicionar/${id}`
+        $(".add-favoritos, .remove-favoritos").on("click", function () {
+            $("#btnFavoritos").prop("disabled",true);
+            var acao = $("#btnFavoritos").attr("data-acao");
+            if(acao === "adicionar" ){
+                var url = `/favoritos/adicionar/${id}`
+            }else if(acao === "remover"){
+                var url = `/favoritos/remover/${id}`
+            }else{
+                return;
+            }
+            
             $.get(url, function (data, status) {
-                if(status === "success")
-                    validarFavoritos();
-            });
-        });
-
-        //Remove Favoritos
-        $(".remove-favoritos").on("click", function () {
-            var url = `../favoritos/remover/${id}`
-            $.get(url, function (data, status) {
-                if(status === "success")
-                    validarFavoritos();
+                if (status === "success"){
+                    window.location.href = window.location.href
+                    //validarFavoritos();
+                }
+                $("#btnFavoritos").prop("disabled",false);
             });
         });
     }
