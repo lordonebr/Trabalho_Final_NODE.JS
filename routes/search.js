@@ -43,8 +43,8 @@ const Service = require('../services/api');
           res.render('search', json);
         })
         .catch(error => {
-          console.log('Erro ao retornar serviço: ' + error);
-          res.status(res.status).end('Erro ao retornar serviço.');
+          console.log(error);
+          res.end(error)
       })
     }
     else

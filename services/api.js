@@ -4,11 +4,11 @@ const fetch = require('node-fetch');
 var md5 = require('md5');
 
 var limitPage = 10;
+var publicKey = 'badb7eca459bfa1204d894bfed07aa99';
+var privateKey = '768abe4345a26a3214483fca33bd5c9bdb5db7dd';
 
 function ServiceBase(serviceName, offset, paramTag, paramValue){
 
-  var publicKey = 'badb7eca459bfa1204d894bfed07aa99';
-  var privateKey = '768abe4345a26a3214483fca33bd5c9bdb5db7dd';
   var ts = Date.now().toString();
   var hash = md5(ts + privateKey + publicKey);
 
@@ -19,7 +19,6 @@ function ServiceBase(serviceName, offset, paramTag, paramValue){
   var hashParam = 'hash=' + hash;
   urlParams += '&' + tsParam + '&' + hashParam;
   
-  console.log('paramTag: ' + paramTag);
   if(paramTag != '' && paramTag != undefined){
     var param1 = paramTag + '=' + paramValue;
     urlParams += '&' + param1;
@@ -38,8 +37,12 @@ function ServiceBase(serviceName, offset, paramTag, paramValue){
     fetch(url)
     .then(res => res.json())
     .then(json => {
+
       //console.log(json);
-      resolve(json);
+      if(json.code != 200)
+        reject('Error ' + json.code + ': ' + json.status);
+      else
+        resolve(json);
     })
     .catch(() => {
       reject('error');
@@ -58,7 +61,8 @@ module.exports = {
         resolve(json);
       })
       .catch(error => {
-        reject('Erro ao obter personagens: ' + error);
+        console.log('Erro ao obter personagens: ' + error);
+        reject(error);
       });
     });
 
@@ -72,14 +76,29 @@ module.exports = {
         resolve(json);
       })
       .catch(error => {
-        reject('Erro ao obter personagem: ' + error);
+        console.log('Erro ao obter personagem: ' + error);
+        reject(error);
       });
     });
 
   },
   GetLimitPage : function(){
     return limitPage;
-  }
+  },
+  GetComicsByCharacter : function(idChatacter, offset){
 
+    return new Promise(function(resolve, reject) {
+
+      ServiceBase('characters/'+idChatacter.toString()+'/comics', offset)
+      .then(json => {
+        resolve(json);
+      })
+      .catch(error => {
+        console.log('Erro ao obter revistinhas: ' + error);
+        reject(error);
+      });
+    });
+
+  }
 
 }
