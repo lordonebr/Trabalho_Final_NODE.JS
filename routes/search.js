@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const Service = require('../services/api');
+const authMiddlewares = require('../middlewares/auth');
 
-  router.get('/', function(req, res, next) {
+  router.get('/', require('connect-ensure-login').ensureLoggedIn(), function(req, res, next) {
     res.render('search');
   });
 

@@ -1,17 +1,17 @@
-
 const nodemail = require('nodemailer');
+const configMail = require('../configs/mail');
 
 const transporter = nodemail.createTransport({
-    service: 'gmail',
+    service: configMail.service,
     auth: {
-        user: "trabalhofinalnode@gmail.com",
-        pass: "TrabalhoFin@l2019"
+        user: configMail.user,
+        pass: configMail.pass,
     }
 });
 
 exports.send = async (to, subject, body) => {
     transporter.sendMail({
-        from: 'trabalhofinalnode@gmail.com',
+        from: configMail.user,
         to: to,
         subject: subject,
         html: body
