@@ -1,11 +1,35 @@
-<div class="container">
-<h1>Welcome to MARVEL API</h1>
+<!doctype html>
+<html lang="en-us">
 
-<a href="/logout" class="btn btn-primary">Sair</a>
+    <head>
 
-<form action="/search" method="POST" >
-    <input type="hidden" name="name">
-    <button type="submit">Search Characters </button>
-</form>
+        <meta charset="utf-8">
+        <title>Welcome to MARVEL API!</title>
 
-</div>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <script src="https://code.iconify.design/1/1.0.2/iconify.min.js"></script>
+    </head>
+    <body class="bg-danger">
+        <div class="container">
+            <img src="/images/banner.png" alt="Marvel" style="width:100%;" />
+
+            <div class="jumbotron bg-light">
+                <h1 class="display-5 text-danger">Hello, Welcome to MARVEL API!</h1>
+                <a href="/logout" class="btn btn-outline-danger">Logout
+                    <span class="iconify" style="padding-bottom:2px; width:25px; height:25px;" data-icon="ant-design:logout-outline" data-inline="false"></span>
+                </a>
+                <hr class="my-4">
+
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-outline-danger" href="/search">Search Characters
+                        <span class="iconify" style="padding-bottom:2px; width:25px; height:25px;" data-icon="fe:search" data-inline="false"></span>
+                    </a>
+                    <a class="btn btn-outline-danger" href="/favoritos/listar">My Favorites
+                        <span class="iconify" style="padding-bottom:2px; width:25px; height:25px;"  data-icon="uil:favorite" data-inline="false"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
