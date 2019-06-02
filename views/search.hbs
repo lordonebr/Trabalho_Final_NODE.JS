@@ -30,9 +30,8 @@
                 <div class="row">
                     <p><b>Showing result of: </b> {{search}}</p>
                 </div>
-                <div class="row" style="padding:20px;">
-                    <img src="{{this.thumbnail.path}}.{{this.thumbnail.extension}}" alt="thumbnail"
-                        style="width:100%; height:20%;">
+                <div class="row">
+                    <p><b>Quantity found: </b> {{data.total}}</p>
                 </div>
             {{/if}}  
             {{#if pages}}  
@@ -59,7 +58,7 @@
             {{/if}}  
             <div class="row">
                 {{#each this.data.results}}
-                <button class="border border-danger btn-light btn-outline-danger" onclick="window.location.href='../character/{{this.id}}/1'" style="width:20%;">
+                <button class="border border-danger btn-light btn-outline-danger" onclick="window.location.href='../character/{{this.id}}/1'" style="width:20%; cursor:pointer;">
                     <div class="row" style="padding-left:20px; padding-right:20px;">
                          <span><b>{{this.name}}</b></span>
                      </div>
