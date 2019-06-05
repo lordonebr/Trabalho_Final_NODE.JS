@@ -78,7 +78,7 @@ router.post('/forgot_password', async (req, res) => {
     })
 
     var emailBody = config.emailReset.replace('{0}', user.name);
-    emailBody = emailBody.replace('{1}', '<a href="http://localhost:3000/users/reset/' + token + '">aqui</a>');
+    emailBody = emailBody.replace('{1}', '<a href="https://testebh.herokuapp.com/users/reset/' + token + '">aqui</a>');
 
     await mailer.send(email, 'Reset de senha (Marvel API)', emailBody);
     res.send({ success: 'Operação realizada com sucesso' });
