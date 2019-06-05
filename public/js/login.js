@@ -19,7 +19,7 @@ $(document).ready(function () {
         var vData = { username: $('#inputEmail-js').val(), password: $('#inputSenha-js').val() };
 
         $.ajax({
-            url: 'http://localhost:3000/auth/local/callback',
+            url: 'https://testebh.herokuapp.com/auth/local/callback',
             type: 'POST',
             data: vData,
             dataType: "json",
@@ -56,7 +56,7 @@ $(document).ready(function () {
         var vData = { name: nameIn, email: emailIn, password: passwordIn };
 
         $.ajax({
-            url: 'http://localhost:3000/users/register',
+            url: 'https://testebh.herokuapp.com/users/register',
             type: 'POST',
             data: vData,
             dataType: "json",
@@ -68,7 +68,7 @@ $(document).ready(function () {
                     var vData = { username: emailIn, password: passwordIn };
 
                     $.ajax({
-                        url: 'http://localhost:3000/auth/local/callback',
+                        url: 'https://testebh.herokuapp.com/auth/local/callback',
                         type: 'POST',
                         data: vData,
                         dataType: "json",
@@ -104,7 +104,7 @@ $(document).ready(function () {
         var vData = { email: $('#campo-email').val() };
 
         $.ajax({
-            url: 'http://localhost:3000/users/forgot_password',
+            url: 'https://testebh.herokuapp.com/users/forgot_password',
             type: 'POST',
             data: vData,
             dataType: "json",
